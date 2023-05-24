@@ -1,5 +1,6 @@
 Réalisez les requêtes SQL suivantes avec HeidiSQL : entre parenthèses les champs servant de référence aux requêtes.
 
+
 a. Informations d’un film (id_film) : titre, année, durée (au format HH:MM) et réalisateur
 
 SELECT film.titre, YEAR(film.dateSortie), TIME_FORMAT(SEC_TO_TIME(film.duree * 60), '%H:%i') AS duree_formattee, personne.nom
@@ -10,4 +11,62 @@ INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
 INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
 -- On fait une joiture entre les table film , realisateur et personne pour pouvoir sortir le nom du realisateur et pas son id 
 WHERE film.idFilm = 1;
+
+
+
+b. Liste des films dont la durée excède 2h15 classés par durée (du + long au + court)
+
+SELECT f.titre, TIME_FORMAT(SEC_TO_TIME(f.duree * 60), '%H:%i') AS duree_formattee
+-- Sélectionne le titre des films et la durée
+FROM film f
+-- Sélectionne la table film
+WHERE f.duree >= 135
+-- On va chercher les films qui durent 135 minutes ou plus
+ORDER BY duree_formattee DESC
+-- On les classe par durée du plus long au plus court
+
+
+
+c. Liste des films d’un réalisateur (en précisant l’année de sortie)
+
+SELECT f.titre, YEAR(f.dateSortie)
+-- Sélectionne le titre du film et sa date de sortie
+FROM film f
+-- Sélectionne la table film
+WHERE idRealisateur = 7
+-- On va chercher l'id du réalisateur pour sortir ses films
+
+
+
+d. Nombre de films par genre (classés dans l’ordre décroissant)
+
+SELECT g.idGenre, genre.nom AS nom_genre, COUNT(*) AS nombre_de_films
+-- Sélectionne l'idGenre , le nom du genre (petit ajout) et le nombre de film
+FROM genrefilm g
+-- Sélectionne la table genrefilm
+INNER JOIN genre ON genre.idGenre = g.idGenre
+-- On fait une jointure avec la table genre
+GROUP BY g.idGenre, genre.nom
+ORDER BY nombre_de_films DESC
+-- On les classe par ordre décroissant 
+
+
+
+e. Nombre de films par réalisateur (classés dans l’ordre décroissant)
+
+SELECT f.idRealisateur, COUNT(*) AS nombre_de_films
+FROM film f
+GROUP BY f.idRealisateur
+ORDER BY nombre_de_films DESC
+
+ou 
+
+-- j'ai ajouté le nom et le prénom du réal pour plus de compréhension 
+SELECT f.idRealisateur, personne.nom, personne.prenom, COUNT(*) AS nombre_de_films
+FROM film f
+INNER JOIN realisateur ON f.idRealisateur = realisateur.idRealisateur
+INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
+GROUP BY f.idRealisateur
+ORDER BY nombre_de_films DESC
+
 
