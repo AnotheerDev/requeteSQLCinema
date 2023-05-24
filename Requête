@@ -101,3 +101,30 @@ WHERE c.idActeur = 9
 -- On sélectionne l'acteur avec l'idActeur 9
 ORDER BY f.dateSortie DESC
 -- On trie du plus récent au plus ancien 
+
+
+
+h. Liste des personnes qui sont à la fois acteurs et réalisateurs
+
+SELECT p.idPersonne, p.nom, p.prenom
+FROM personne p
+INNER JOIN acteur a ON p.idPersonne = a.idPersonne
+INNER JOIN realisateur r ON p.idPersonne = r.idPersonne
+
+
+
+i. Liste des films qui ont moins de 5 ans (classés du plus récent au plus ancien)
+
+SELECT idFilm, titre, dateSortie
+FROM film
+WHERE YEAR(dateSortie) > YEAR(CURRENT_DATE()) - 5
+ORDER BY dateSortie DESC
+
+
+
+j. Nombre d’hommes et de femmes parmi les acteurs
+
+SELECT sexe, COUNT(*) AS nombre_acteurs
+FROM personne
+INNER JOIN acteur ON personne.idPersonne = acteur.idPersonne
+GROUP BY sexe
