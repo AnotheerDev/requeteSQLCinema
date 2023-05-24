@@ -88,4 +88,16 @@ WHERE f.idFilm = 1
 
 g. Films tournés par un acteur en particulier (id_acteur) avec leur rôle et l’année de sortie (du film le plus récent au plus ancien)
 
-
+SELECT c.idActeur, p.nom, p.prenom, c.idRole, r.nom AS nom_role, YEAR(f.dateSortie) AS annee_sortie
+-- Sélectionne l'idActeur, le nom et prénom de l'acteur , l'idRole et l'année de sortie
+FROM casting c
+-- Sélectionne la table casting 
+INNER JOIN film f ON c.idFilm = f.idFilm
+INNER JOIN acteur a ON c.idActeur = a.idActeur
+INNER JOIN personne p ON a.idPersonne = p.idPersonne
+INNER JOIN role r ON c.idRole = r.idRole
+-- On fait des jointures pour pouvoir récuperer le nom et prenom de l'acteur ainsi que le nom du role
+WHERE c.idActeur = 9
+-- On sélectionne l'acteur avec l'idActeur 9
+ORDER BY f.dateSortie DESC
+-- On trie du plus récent au plus ancien 
