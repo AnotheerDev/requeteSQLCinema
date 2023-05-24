@@ -83,3 +83,9 @@ INNER JOIN acteur a ON c.idActeur = a.idActeur
 INNER JOIN personne p ON a.idPersonne = p.idPersonne
 -- On fait une jointure pour récuperer les infos de la personne on prend l'idFilm via casting plus l'idActeur via acteur puis avec l'id de l'acteur on sait qui est la personne
 WHERE f.idFilm = 1
+
+
+
+g. Films tournés par un acteur en particulier (id_acteur) avec leur rôle et l’année de sortie (du film le plus récent au plus ancien)
+
+
