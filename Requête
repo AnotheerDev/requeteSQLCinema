@@ -64,9 +64,22 @@ ou
 -- j'ai ajouté le nom et le prénom du réal pour plus de compréhension 
 SELECT f.idRealisateur, personne.nom, personne.prenom, COUNT(*) AS nombre_de_films
 FROM film f
+-- Sélectionne la table film
 INNER JOIN realisateur ON f.idRealisateur = realisateur.idRealisateur
 INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
 GROUP BY f.idRealisateur
 ORDER BY nombre_de_films DESC
 
 
+
+f. Casting d’un film en particulier (id_film) : nom, prénom des acteurs + sexe
+
+SELECT f.idFilm, f.titre, p.nom, p.prenom, p.sexe
+-- Sélectionne l'id du film ainsi que le titre , le nom, prenom et sexe et l'acteur ou des acteurs
+FROM film f
+-- Sélectionne la table film
+INNER JOIN casting c ON f.idFilm = c.idFilm
+INNER JOIN acteur a ON c.idActeur = a.idActeur
+INNER JOIN personne p ON a.idPersonne = p.idPersonne
+-- On fait une jointure pour récuperer les infos de la personne on prend l'idFilm via casting plus l'idActeur via acteur puis avec l'id de l'acteur on sait qui est la personne
+WHERE f.idFilm = 1
