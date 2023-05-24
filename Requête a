@@ -1,0 +1,13 @@
+Réalisez les requêtes SQL suivantes avec HeidiSQL : entre parenthèses les champs servant de référence aux requêtes.
+
+a. Informations d’un film (id_film) : titre, année, durée (au format HH:MM) et réalisateur
+
+SELECT film.titre, YEAR(film.dateSortie), TIME_FORMAT(SEC_TO_TIME(film.duree * 60), '%H:%i') AS duree_formattee, personne.nom
+-- Sélectionne le titre du film , la date converti en ANNEE , la durée du film converti en HH:MM et le nom du réalisateur 
+FROM film
+-- Sélectionne la table film
+INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
+INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
+-- On fait une joiture entre les table film , realisateur et personne pour pouvoir sortir le nom du realisateur et pas son id 
+WHERE film.idFilm = 1;
+
