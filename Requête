@@ -128,3 +128,23 @@ SELECT sexe, COUNT(*) AS nombre_acteurs
 FROM personne
 INNER JOIN acteur ON personne.idPersonne = acteur.idPersonne
 GROUP BY sexe
+
+
+
+
+k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
+
+SELECT nom, prenom, dateNaissance
+FROM personne
+WHERE YEAR(CURRENT_DATE()) - YEAR(dateNaissance) > 50
+
+
+
+l. Acteurs ayant joué dans 3 films ou plus
+
+SELECT p.idPersonne, p.nom, p.prenom, COUNT(*) AS nombre_films
+FROM personne p
+INNER JOIN acteur a ON p.idPersonne = a.idPersonne
+INNER JOIN casting c ON a.idActeur = c.idActeur
+GROUP BY p.idPersonne, p.nom, p.prenom
+HAVING COUNT(*) >= 3
